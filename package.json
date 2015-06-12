@@ -1,7 +1,7 @@
 {
   "name": "generator-feenix",
   "version": "0.0.0",
-  "description": "Yeoman generator",
+  "description": "SAPUI5 Yeoman generator",
   "license": "MIT",
   "main": "app/index.js",
   "repository": "lxinspc/generator-feenix",
