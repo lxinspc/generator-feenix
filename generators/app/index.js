@@ -2,6 +2,7 @@
 var yeoman = require('yeoman-generator');
 var chalk = require('chalk');
 var yosay = require('yosay');
+var mkdirp = require('mkdirp');
 
 module.exports = yeoman.generators.Base.extend({
   component: "",
@@ -120,31 +121,49 @@ module.exports = yeoman.generators.Base.extend({
 
 
 
-  writing: {
-    app: function () {
-      this.fs.copy(
-        this.templatePath('_package.json'),
-        this.destinationPath('package.json')
-      );
-      this.fs.copy(
-        this.templatePath('_bower.json'),
-        this.destinationPath('bower.json')
-      );
+  writing: function() {
+    //Core Directories to create irrespective of options
+    //css, i18n, util, view
+    this.log('Creating directories');
+    var _directories = [ "css", "i18n", "util", "view" ];
+    var _i;
+    for (_i=0;_i<_directories.length;_i++) {
+      this.log(chalk.blue('  ' + _directories[_i]));
+      mkdirp(_directories[_i]);
+    //Optional directories
+    }
+    if (this.props.useMockserver) {
+      this.log(chalk.blue("  model"));
+      mkdirp("model");
+    }
+
+
+
+
+    //    app: function () {
+//      this.fs.copy(
+//        this.templatePath('_package.json'),
+//        this.destinationPath('package.json')
+//      );
+//      this.fs.copy(
+//        this.templatePath('_bower.json'),
+//        this.destinationPath('bower.json')
+//      );
     },
 
-    projectfiles: function () {
-      this.fs.copy(
-        this.templatePath('editorconfig'),
-        this.destinationPath('.editorconfig')
-      );
-      this.fs.copy(
-        this.templatePath('jshintrc'),
-        this.destinationPath('.jshintrc')
-      );
-    }
-  },
+//    projectfiles: function () {
+//      this.fs.copy(
+//        this.templatePath('editorconfig'),
+//        this.destinationPath('.editorconfig')
+//      );
+//      this.fs.copy(
+//        this.templatePath('jshintrc'),
+//        this.destinationPath('.jshintrc')
+//      );
+//    }
+//  },
 
   install: function () {
-    this.installDependencies();
+    //this.installDependencies();
   }
 });
